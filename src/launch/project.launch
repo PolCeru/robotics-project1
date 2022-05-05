@@ -1,0 +1,31 @@
+<launch>
+	<param name = "initialPose_x" value = "0"/>
+	<param name = "initialPose_y" value = "0"/>
+	<param name = "initialPose_theta" value = "0"/>
+
+	<node pkg = "project" type = "velocity_computer" name = "velComputer"/>
+	<node pkg = "project" type = "odometry_computer" name = "odomComputer" output = "screen"/>
+	<node pkg = "project" type = "rpm_computer" name = "rpmComputer"/>
+	<node pkg = "project" type = "tf2_broad" name = "tfbroadcaster"/>
+
+	
+	<node pkg = "tf2_ros" type = "static_transform_publisher" name = "world_odom" args = "0.025 0 0.35 0 0 0 1 world odom"/>
+	<node pkg = "tf2_ros" type = "static_transform_publisher" name = "front_right" args = "0.2 0.171 0 0 0 0 1 base_link FrontRightW"/>
+	<node pkg = "tf2_ros" type = "static_transform_publisher" name = "front_left" args = "-0.2 0.171 0 0 0 0 1 base_link FrontLeftW"/>
+	<node pkg = "tf2_ros" type = "static_transform_publisher" name = "rear_right" args = "0.2 -0.171 0 0 0 0 1 base_link RearRightW"/>
+	<node pkg = "tf2_ros" type = "static_transform_publisher" name = "rear_left" args = "-0.2 -0.171 0 0 0 0 1 base_link RearLeftW"/>
+
+	<node pkg = "rqt_plot" type = "rqt_plot" name = "robot_odom_pose" args="
+		/odom/pose/pose/position/x
+		/odom/pose/pose/position/y
+		/odom/pose/pose/orientation/z
+		/robot/pose/pose/position/x
+		/robot/pose/pose/position/y
+		/robot/pose/pose/orientation/z"
+	/>
+
+	<node pkg = "rqt_service_caller" type = "rqt_service_caller" name = "serviceCaller"/>
+	<node pkg = "rqt_reconfigure" type = "rqt_reconfigure" name = "integration_method"/>
+
+	<node type="rviz" name="rviz" pkg="rviz"/>
+</launch>
