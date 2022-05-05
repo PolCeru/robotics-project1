@@ -1,4 +1,7 @@
 # Robotics: Project 1
+
+1st project of Robotics, Politecnico di Milano, A.A. 2021/2022
+
 ## Group components:
 - 10686087 Bruno Andrea
 - 10723902 Cerutti Paolo
